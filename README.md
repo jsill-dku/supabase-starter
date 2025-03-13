@@ -4,17 +4,31 @@ A complete starter template for building applications with Supabase and Next.js 
 
 ## Features
 
-- Next.js 14 with App Router
-- Supabase Authentication (Email & Password)
-- Complete auth flows:
-  - Sign Up
-  - Sign In
+- **Authentication:**
+  - Sign Up with email and password
+  - Sign In with email and password
   - Sign Out
-  - Password Reset
-- Tailwind CSS for styling
-- TypeScript for type safety
-- Sample Dashboard with user information
-- Ready-to-use SQL schema for Supabase
+  - Password Reset flow
+  - Email verification workflow
+  - Protected routes
+
+- **Structure:**
+  - Next.js 14 with App Router
+  - TypeScript for type safety
+  - Tailwind CSS for styling
+  - Responsive layouts
+  - Supabase client integration
+  - Middleware for auth session management
+
+- **Components:**
+  - Reusable UI components
+  - Authentication pages
+  - Dashboard page
+
+- **Database:**
+  - SQL schema with Row Level Security (RLS)
+  - User profiles table
+  - Sample tasks table
 
 ## Getting Started
 
@@ -63,16 +77,35 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Project Structure
 
 ```
-├── public/           # Static assets
+├── public/                  # Static assets
 ├── src/
-│   ├── app/          # Next.js app router
-│   │   ├── api/      # API routes and database schema
-│   │   ├── auth/     # Authentication pages
-│   │   ├── dashboard/# Dashboard page
-│   ├── components/   # Reusable UI components
-│   ├── lib/          # Utility functions and library setups
-├── .env.example      # Example environment variables
-└── README.md         # Project documentation
+│   ├── app/                 # Next.js app router
+│   │   ├── api/             # API routes 
+│   │   │   ├── auth/        # Auth API endpoints
+│   │   │   └── supabase-schema.sql  # Database schema
+│   │   ├── auth/            # Authentication pages
+│   │   │   ├── callback/    # Auth callback handler
+│   │   │   ├── forgot-password/  # Password reset request
+│   │   │   ├── reset-password/   # Password reset form
+│   │   │   ├── signin/      # Login page
+│   │   │   └── signup/      # Registration page
+│   │   ├── dashboard/       # Protected dashboard page
+│   │   ├── globals.css      # Global styles
+│   │   ├── layout.tsx       # Root layout
+│   │   └── page.tsx         # Home page
+│   ├── components/          # Reusable UI components
+│   │   └── ui/              # UI components
+│   │       └── Button.tsx   # Button component
+│   └── lib/                 # Utility functions and library setups
+│       └── supabase/        # Supabase client
+├── middleware.ts            # Next.js middleware for auth
+├── .env.example             # Example environment variables
+├── next.config.js           # Next.js configuration
+├── package.json             # Dependencies and scripts
+├── postcss.config.js        # PostCSS configuration
+├── tailwind.config.js       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
+└── README.md                # Project documentation
 ```
 
 ## Authentication Flow
@@ -85,15 +118,22 @@ This starter comes with a complete authentication system built with Supabase Aut
 4. **Password Reset**: Forgot password flow with email-based reset
 5. **Protected Routes**: Dashboard is protected and requires authentication
 
+The middleware handles session management and redirects unauthenticated users from protected routes.
+
 ## Customizing
 
 ### Styling
 
-This project uses Tailwind CSS for styling. The main theme colors and styles can be customized in `tailwind.config.js`.
+This project uses Tailwind CSS for styling. The main theme colors and styles can be customized in `tailwind.config.js`. Supabase's brand color is included as a default color.
 
 ### Database Schema
 
-Check the sample schema in `src/app/api/supabase-schema.sql`. You can modify this file to add your own tables and security policies.
+Check the sample schema in `src/app/api/supabase-schema.sql`. You can modify this file to add your own tables and security policies. The schema includes:
+
+- A profiles table that extends the default auth.users table
+- Row Level Security (RLS) policies to secure your data
+- Automatic profile creation on user signup via triggers
+- A sample tasks table with proper RLS
 
 ### Adding Features
 
@@ -102,6 +142,7 @@ The basic authentication and user management is already set up. You can extend t
 1. Adding new database tables in Supabase
 2. Creating new API routes in `src/app/api/`
 3. Building new UI components in `src/components/`
+4. Adding new pages in `src/app/`
 
 ## Deployment
 
